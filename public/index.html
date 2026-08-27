@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Job Application Tracker</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <h1>Job Application Tracker</h1>
+    <div class="total-counter">
+      <span id="totalCount">0</span>
+      <span class="total-label">applied</span>
+    </div>
+  </header>
+
+  <section class="stats-row">
+    <div class="stat-pill pending"><span id="pendingCount">0</span> pending</div>
+    <div class="stat-pill accepted"><span id="acceptedCount">0</span> accepted</div>
+    <div class="stat-pill rejected"><span id="rejectedCount">0</span> rejected</div>
+  </section>
+
+  <section class="calendar-card">
+    <div class="calendar-header">
+      <button id="prevMonth" class="nav-btn" aria-label="Previous month">&#8592;</button>
+      <h2 id="calendarTitle"></h2>
+      <button id="nextMonth" class="nav-btn" aria-label="Next month">&#8594;</button>
+    </div>
+    <div class="calendar-weekdays">
+      <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+    </div>
+    <div id="calendarGrid" class="calendar-grid"></div>
+  </section>
+
+  <section class="add-card">
+    <h2>Add application</h2>
+    <form id="addForm">
+      <input type="url" id="urlInput" placeholder="Job posting link (https://...)" required />
+      <div class="row">
+        <input type="text" id="titleInput" placeholder="Job title" />
+        <input type="text" id="companyInput" placeholder="Company" />
+      </div>
+      <div class="row">
+        <input type="date" id="dateInput" />
+        <button type="submit">Add application</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="list-card">
+    <h2>Applications</h2>
+    <div id="jobList" class="job-list"></div>
+    <p id="emptyState" class="empty-state" hidden>No applications yet — add your first one above.</p>
+  </section>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+services:
+  apptracker:
+    build: .
+    container_name: apptracker
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - apptracker_data:/data
+
+volumes:
+  apptracker_data:
