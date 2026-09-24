@@ -1,8 +1,14 @@
-# Job Application Tracker
+# Application Log
 
-Self-hosted, single-container app for tracking job applications: paste a
-link, title, and company; mark applications accepted/rejected; see a total
-counter and a calendar of how many you applied to each day.
+A self-hosted, single-container job application tracker. Keep each role,
+company, application date, status, and the exact resume used for that
+application in one private log. The dashboard also includes an activity
+calendar and at-a-glance status totals.
+
+Resume uploads accept PDF, DOC, DOCX, RTF, and TXT files up to 10 MB. Files
+are stored privately under the app's data directory and are only downloaded
+through their application record. Clearing application history also removes
+the attached resume files.
 
 ## Run
 
@@ -12,8 +18,8 @@ docker compose up -d --build
 
 Then open `http://<your-server-ip>:3000`.
 
-Data persists in the `apptracker_data` Docker volume (a `jobs.json` file
-under `/data`), so it survives restarts and rebuilds.
+Application data and uploaded resumes persist in the `apptracker_data` Docker
+volume under `/data`, so they survive restarts and rebuilds.
 
 ## Update after code changes
 

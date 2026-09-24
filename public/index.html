@@ -1,66 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>GL Application Tracker</title>
-<link rel="icon" type="image/x-icon" href="/favicon.ico" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-<link rel="manifest" href="/site.webmanifest" />
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A focused, private record of your job applications." />
+  <title>Application Log</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<div class="app">
-  <header class="topbar">
-    <h1>GL Application Tracker</h1>
-    <div class="total-counter">
-      <span id="totalCount">0</span>
-      <span class="total-label">applied</span>
-    </div>
-  </header>
-
-  <section class="stats-row">
-    <div class="stat-pill pending"><span id="pendingCount">0</span> pending</div>
-    <div class="stat-pill accepted"><span id="acceptedCount">0</span> accepted</div>
-    <div class="stat-pill rejected"><span id="rejectedCount">0</span> rejected</div>
-  </section>
-
-  <section class="calendar-card">
-    <div class="calendar-header">
-      <button id="prevMonth" class="nav-btn" aria-label="Previous month">&#8592;</button>
-      <h2 id="calendarTitle"></h2>
-      <button id="nextMonth" class="nav-btn" aria-label="Next month">&#8594;</button>
-    </div>
-    <div class="calendar-weekdays">
-      <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
-    </div>
-    <div id="calendarGrid" class="calendar-grid"></div>
-  </section>
-
-  <section class="add-card">
-    <h2>Add application</h2>
-    <form id="addForm">
-      <input type="url" id="urlInput" placeholder="Job posting link (https://...)" required />
-      <div class="row">
-        <input type="text" id="titleInput" placeholder="Job title" />
-        <input type="text" id="companyInput" placeholder="Company" />
+  <div class="shell">
+    <header class="topbar">
+      <a class="wordmark" href="#top" aria-label="Application Log home">
+        <span class="wordmark-mark" aria-hidden="true">GL</span>
+        <span>Application Log</span>
+      </a>
+      <div class="topbar-actions">
+        <a class="text-button" href="#new-application">New application</a>
+        <button id="openClearDialog" class="danger-button" type="button">Clear history</button>
       </div>
-      <div class="row">
-        <input type="date" id="dateInput" />
-        <button type="submit">Add application</button>
+    </header>
+
+    <main id="top">
+      <section class="overview" aria-labelledby="overviewTitle">
+        <div class="overview-copy">
+          <p class="eyebrow">YOUR SEARCH, AT A GLANCE</p>
+          <h1 id="overviewTitle">Keep the process<br />in one place.</h1>
+          <p class="intro">Track every application, decision, and tailored resume without turning your search into a second job.</p>
+        </div>
+
+        <div class="scoreboard" aria-label="Application summary">
+          <div class="total-stat">
+            <span id="totalCount">0</span>
+            <span>applications</span>
+          </div>
+          <div class="status-stats">
+            <div><i class="status-dot pending" aria-hidden="true"></i><span>Pending</span><strong id="pendingCount">0</strong></div>
+            <div><i class="status-dot accepted" aria-hidden="true"></i><span>Accepted</span><strong id="acceptedCount">0</strong></div>
+            <div><i class="status-dot rejected" aria-hidden="true"></i><span>Rejected</span><strong id="rejectedCount">0</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="workspace-grid">
+        <article class="panel calendar-panel" aria-labelledby="calendarTitle">
+          <div class="panel-heading calendar-header">
+            <div>
+              <p class="section-kicker">Activity</p>
+              <h2 id="calendarTitle"></h2>
+            </div>
+            <div class="month-controls">
+              <button id="prevMonth" class="icon-button" type="button" aria-label="Previous month">&#8592;</button>
+              <button id="nextMonth" class="icon-button" type="button" aria-label="Next month">&#8594;</button>
+            </div>
+          </div>
+          <div class="calendar-weekdays" aria-hidden="true">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div id="calendarGrid" class="calendar-grid"></div>
+        </article>
+
+        <aside id="new-application" class="panel add-panel" aria-labelledby="addTitle">
+          <div class="panel-heading">
+            <p class="section-kicker">New record</p>
+            <h2 id="addTitle">Add an application</h2>
+          </div>
+          <form id="addForm" enctype="multipart/form-data">
+            <label class="field full-field">
+              <span>Job posting</span>
+              <input type="url" id="urlInput" name="url" placeholder="https://company.com/job" required />
+            </label>
+            <div class="form-row">
+              <label class="field">
+                <span>Role</span>
+                <input type="text" id="titleInput" name="title" placeholder="Product designer" />
+              </label>
+              <label class="field">
+                <span>Company</span>
+                <input type="text" id="companyInput" name="company" placeholder="Acme, Inc." />
+              </label>
+            </div>
+            <div class="form-row">
+              <label class="field">
+                <span>Date applied</span>
+                <input type="date" id="dateInput" name="dateApplied" />
+              </label>
+              <label class="field file-field">
+                <span>Resume <small>optional</small></span>
+                <input type="file" id="resumeInput" name="resume" accept=".pdf,.doc,.docx,.rtf,.txt" />
+                <span id="resumeFileLabel" class="file-picker"><b>Choose file</b><em>PDF, DOCX · 10 MB max</em></span>
+              </label>
+            </div>
+            <button id="addSubmit" class="primary-button" type="submit">
+              <span>Add to log</span><span aria-hidden="true">&#8594;</span>
+            </button>
+          </form>
+        </aside>
+      </section>
+
+      <section class="applications-section" aria-labelledby="applicationsTitle">
+        <div class="list-heading">
+          <div>
+            <p class="section-kicker">History</p>
+            <h2 id="applicationsTitle">Applications</h2>
+          </div>
+          <p id="listSummary" class="list-summary">0 records</p>
+        </div>
+        <div class="table-labels" aria-hidden="true">
+          <span>Role</span><span>Resume</span><span>Status</span><span></span>
+        </div>
+        <div id="jobList" class="job-list"></div>
+        <div id="emptyState" class="empty-state" hidden>
+          <span class="empty-number">01</span>
+          <div>
+            <h3>Your log is ready.</h3>
+            <p>Add the first role you applied for. It will show up here with its status and resume.</p>
+          </div>
+          <a href="#new-application">Add an application</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Application Log</span>
+      <span>Private by design · Stored on your server</span>
+    </footer>
+  </div>
+
+  <dialog id="clearDialog" class="confirm-dialog">
+    <form method="dialog">
+      <p class="section-kicker">Permanent action</p>
+      <h2>Clear your entire history?</h2>
+      <p>This removes every application and every uploaded resume. This can’t be undone.</p>
+      <div class="dialog-actions">
+        <button class="text-button" value="cancel">Keep my history</button>
+        <button id="confirmClear" class="confirm-danger" value="confirm">Clear everything</button>
       </div>
     </form>
-  </section>
+  </dialog>
 
-  <section class="list-card">
-    <h2>Applications</h2>
-    <div id="jobList" class="job-list"></div>
-    <p id="emptyState" class="empty-state" hidden>No applications yet — add your first one above.</p>
-  </section>
-</div>
-
-<script src="app.js"></script>
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  <script src="app.js"></script>
 </body>
 </html>
