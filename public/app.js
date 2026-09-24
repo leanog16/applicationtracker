@@ -13,7 +13,7 @@ function localDateString(date = new Date()) {
   return local.toISOString().slice(0, 10);
 }
 
-async function request(url, options = {}) {
+async function request(url, options = {}, expectJson = true) {
   const response = await fetch(url, options);
   if (!response.ok) {
     let message = 'Something went wrong. Please try again.';
@@ -26,7 +26,15 @@ async function request(url, options = {}) {
     throw new Error(message);
   }
   if (response.status === 204) return null;
-  return response.json();
+  if (!expectJson) return null;
+
+  const responseText = await response.text();
+  if (!responseText) throw new Error('The server returned an empty response.');
+  try {
+    return JSON.parse(responseText);
+  } catch {
+    throw new Error('The server returned an unreadable response.');
+  }
 }
 
 function showToast(message, type = 'success') {
@@ -182,7 +190,7 @@ $('#addForm').addEventListener('submit', async (event) => {
   button.querySelector('span').textContent = 'Adding…';
 
   try {
-    await request('/api/jobs', { method: 'POST', body: formData });
+    await request('/api/jobs', { method: 'POST', body: formData }, false);
     event.currentTarget.reset();
     $('#dateInput').value = localDateString();
     $('#resumeFileLabel').innerHTML = '<b>Choose file</b><em>PDF, DOCX · 10 MB max</em>';
@@ -204,7 +212,7 @@ $('#jobList').addEventListener('change', async (event) => {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: target.value }),
-      });
+      }, false);
       await loadAll();
       showToast('Application status updated.');
     } catch (error) {
@@ -227,7 +235,7 @@ $('#jobList').addEventListener('change', async (event) => {
       await request(`/api/jobs/${encodeURIComponent(target.dataset.id)}/resume`, {
         method: 'POST',
         body: formData,
-      });
+      }, false);
       await loadAll();
       showToast('Resume attached to the application.');
     } catch (error) {
